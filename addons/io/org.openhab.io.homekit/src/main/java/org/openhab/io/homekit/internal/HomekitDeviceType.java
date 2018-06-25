@@ -28,7 +28,8 @@ public enum HomekitDeviceType {
     COLORFUL_LIGHTBULB("ColorfulLighting"),
     VALVE("Valve"),
     LEAK_SENSOR("LeakSensor"),
-    MOTION_SENSOR("MotionSensor");
+    MOTION_SENSOR("MotionSensor"),
+    BLINDS("Blinds");
 
     private static final Map<String, HomekitDeviceType> tagMap = new HashMap<>();
 
