@@ -19,8 +19,6 @@ package org.openhab.binding.geothunk.internal;
  */
 public class GeoThunkConfiguration {
 
-    /**
-     * Sample configuration parameter. Replace with your own.
-     */
-    public String config1;
+    public String url;
+    public Integer refreshSeconds;
 }

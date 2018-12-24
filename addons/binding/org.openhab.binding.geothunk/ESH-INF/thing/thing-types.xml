@@ -4,29 +4,69 @@
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
+	<thing-type id="aqi">
 		<label>GeoThunk Binding Thing</label>
-		<description>Sample thing for GeoThunk Binding</description>
+		<description>GeoThunk Binding</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel" />
+			<channel id="pm25" typeId="pm25" />
+			<channel id="pm10" typeId="pm10" />
+			<channel id="pm1" typeId="pm1" />
+			<channel id="temperature" typeId="temperature" />
+			<channel id="humidity" typeId="humidity" />
 		</channels>
 
 		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample parameter</label>
-				<description>This is a sample text configuration parameter.</description>
+			<parameter name="url" type="text" required="true">
+				<label>Base URL</label>
+				<description>URL for GeoThunk sensor; IE http://geothunk.local</description>
+			</parameter>
+			<parameter name="refreshSeconds" type="integer" min="30" required="false">
+				<label>Poll interval</label>
+				<description>Specifies the interval at which we poll the data</description>
+        <default>60</default>
 			</parameter>
 		</config-description>
 
 	</thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>geothunkItem</item-type>
-		<label>GeoThunk Binding Channel</label>
-		<description>Sample channel for GeoThunk Binding</description>
+	<channel-type id="pm25">
+		<item-type>Number</item-type>
+		<label>PM2.5</label>
+		<description>Fine particles pollution level</description>
+		<category>PM2.5</category>
+		<state readOnly="true" pattern="%d"/>
 	</channel-type>
 
+	<channel-type id="pm1">
+		<item-type>Number</item-type>
+		<label>PM1</label>
+		<description>Coarse dust particles pollution level</description>
+		<category>PM1</category>
+		<state readOnly="true" pattern="%d"/>
+	</channel-type>
+
+	<channel-type id="pm10">
+		<item-type>Number</item-type>
+		<label>PM10</label>
+		<description>Coarse dust particles pollution level</description>
+		<category>PM10</category>
+		<state readOnly="true" pattern="%d"/>
+	</channel-type>
+
+	<channel-type id="temperature" advanced="true">
+		<item-type>Number:Temperature</item-type>
+		<label>Temperature</label>
+		<description>Temperature</description>
+		<category>Temperature</category>
+		<state readOnly="true" pattern="%.1f %unit%"/>
+	</channel-type>
+
+	<channel-type id="humidity" advanced="true">
+		<item-type>Number:Dimensionless</item-type>
+		<label>Humidity</label>
+		<description>Current humidity</description>
+		<category>Humidity</category>
+		<state readOnly="true" min="0" max="100" pattern="%.2f %unit%" />
+	</channel-type>
 </thing:thing-descriptions>
