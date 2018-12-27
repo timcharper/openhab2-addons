@@ -7,10 +7,7 @@ Bundle-Name: GeoThunk Binding
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-SymbolicName: org.openhab.binding.geothunk;singleton:=true
 Bundle-Vendor: openHAB
-Bundle-Version: 2.4.0
-Export-Package: 
- org.openhab.binding.geothunk,
- org.openhab.binding.geothunk.internal
+Bundle-Version: 2.4.0.qualifier
 Import-Package: 
  com.google.gson,
  com.google.gson.annotations,
@@ -27,7 +24,5 @@ Import-Package:
  org.eclipse.smarthome.core.thing.binding.builder,
  org.eclipse.smarthome.core.thing.type,
  org.eclipse.smarthome.core.types,
- org.openhab.binding.geothunk,
- org.openhab.binding.geothunk.internal,
  org.slf4j
 Service-Component: OSGI-INF/*.xml

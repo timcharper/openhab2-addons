@@ -69,4 +69,5 @@
 		<category>Humidity</category>
 		<state readOnly="true" min="0" max="100" pattern="%.2f %unit%" />
 	</channel-type>
+
 </thing:thing-descriptions>
