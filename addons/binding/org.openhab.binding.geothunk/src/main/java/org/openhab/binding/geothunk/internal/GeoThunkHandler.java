@@ -220,16 +220,22 @@ public class GeoThunkHandler extends BaseThingHandler {
                 IOUtils.closeQuietly(connection.getInputStream());
             }
 
-            if (result.getHumidityPercent() > 0) {
+            if (result == null) {
+                errorMsg = "Couldn't get a response from geothunk";
+            } else if (result.getHumidityPercent() <= 0) {
+                errorMsg = "Humidity returned 0%; is a wire loose?";
+            } else {
                 String description = String.format("LastUpdate: %d; Humidity: %d; Temperature: %d; PM25: %d", result.getLastUpdate(), result.getHumidityPercent(), result.getTemperatureCelsius(), result.getPm2_5());
                 updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE, description);
                 return result;
-            } else {
-                retryCounter++;
-                logger.warn("Error in geothunk binding ({}); humidity was 0. Is a wire loose? Retrying", urlStr);
-                return getGeoThunkData();
             }
-
+            retryCounter++;
+            logger.warn("Error in geothunk binding ({}); {}", urlStr, errorMsg);
+            if (retryCounter == 1) {
+                return getGeoThunkData();
+            } else {
+                logger.warn("request: {}", errorMsg);
+            }
         } catch (MalformedURLException e) {
             errorMsg = e.getMessage();
             logger.warn("Constructed url {} is not valid: {}", urlStr, errorMsg);
