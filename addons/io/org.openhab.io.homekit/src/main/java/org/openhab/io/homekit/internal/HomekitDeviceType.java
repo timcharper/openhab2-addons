@@ -25,7 +25,10 @@ public enum HomekitDeviceType {
     SWITCH("Switchable"),
     TEMPERATURE_SENSOR("CurrentTemperature"),
     THERMOSTAT("Thermostat"),
-    COLORFUL_LIGHTBULB("ColorfulLighting");
+    COLORFUL_LIGHTBULB("ColorfulLighting"),
+    VALVE("Valve"),
+    LEAK_SENSOR("LeakSensor"),
+    MOTION_SENSOR("MotionSensor");
 
     private static final Map<String, HomekitDeviceType> tagMap = new HashMap<>();
 
