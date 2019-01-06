@@ -12,6 +12,8 @@ import org.eclipse.smarthome.core.items.GenericItem;
 import org.eclipse.smarthome.core.items.GroupItem;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemRegistry;
+import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 import org.slf4j.Logger;
@@ -31,16 +33,19 @@ abstract class AbstractHomekitAccessoryImpl<T extends GenericItem> implements Ho
     private final String itemName;
     private final String itemLabel;
     private final ItemRegistry itemRegistry;
+    private final ItemChannelLinkRegistry itemChannelLinkRegistry;
     private final HomekitAccessoryUpdater updater;
 
     private Logger logger = LoggerFactory.getLogger(AbstractHomekitAccessoryImpl.class);
 
     public AbstractHomekitAccessoryImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater, Class<T> expectedItemClass) {
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater,
+            Class<T> expectedItemClass) {
         this.accessoryId = taggedItem.getId();
         this.itemName = taggedItem.getItem().getName();
         this.itemLabel = taggedItem.getItem().getLabel();
         this.itemRegistry = itemRegistry;
+        this.itemChannelLinkRegistry = itemChannelLinkRegistry;
         this.updater = updater;
         Item baseItem = taggedItem.getItem();
         if (baseItem instanceof GroupItem && ((GroupItem) baseItem).getBaseItem() != null) {
@@ -97,5 +102,14 @@ abstract class AbstractHomekitAccessoryImpl<T extends GenericItem> implements Ho
 
     protected GenericItem getItem() {
         return (GenericItem) getItemRegistry().get(getItemName());
+    }
+
+    protected boolean isOnline(String itemNameInQuestion) {
+        return this.itemChannelLinkRegistry.getBoundThings(itemNameInQuestion).stream()
+                .allMatch(thing -> thing.getStatus() == ThingStatus.ONLINE);
+    }
+
+    protected boolean isOnline() {
+        return isOnline(itemName);
     }
 }

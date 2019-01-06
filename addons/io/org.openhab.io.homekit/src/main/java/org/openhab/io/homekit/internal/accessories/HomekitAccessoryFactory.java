@@ -9,6 +9,7 @@
 package org.openhab.io.homekit.internal.accessories;
 
 import org.eclipse.smarthome.core.items.ItemRegistry;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitSettings;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
@@ -23,40 +24,42 @@ import com.beowulfe.hap.HomekitAccessory;
 public class HomekitAccessoryFactory {
 
     public static HomekitAccessory create(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater, HomekitSettings settings) throws Exception {
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater, HomekitSettings settings)
+            throws Exception {
         switch (taggedItem.getDeviceType()) {
             case LEAK_SENSOR:
-                return new HomekitLeakSensorImpl(taggedItem, itemRegistry, updater);
+                return new HomekitLeakSensorImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case VALVE:
-                return new HomekitValveImpl(taggedItem, itemRegistry, updater);
+                return new HomekitValveImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case MOTION_SENSOR:
-                return new HomekitMotionSensorImpl(taggedItem, itemRegistry, updater);
+                return new HomekitMotionSensorImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case LIGHTBULB:
-                return new HomekitLightbulbImpl(taggedItem, itemRegistry, updater);
+                return new HomekitLightbulbImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case DIMMABLE_LIGHTBULB:
-                return new HomekitDimmableLightbulbImpl(taggedItem, itemRegistry, updater);
+                return new HomekitDimmableLightbulbImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case COLORFUL_LIGHTBULB:
-                return new HomekitColorfulLightbulbImpl(taggedItem, itemRegistry, updater);
+                return new HomekitColorfulLightbulbImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case THERMOSTAT:
-                return new HomekitThermostatImpl(taggedItem, itemRegistry, updater, settings);
+                return new HomekitThermostatImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, settings);
 
             case SWITCH:
-                return new HomekitSwitchImpl(taggedItem, itemRegistry, updater);
+                return new HomekitSwitchImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
 
             case TEMPERATURE_SENSOR:
-                return new HomekitTemperatureSensorImpl(taggedItem, itemRegistry, updater, settings);
+                return new HomekitTemperatureSensorImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater,
+                        settings);
 
             case HUMIDITY_SENSOR:
-                return new HomekitHumiditySensorImpl(taggedItem, itemRegistry, updater);
+                return new HomekitHumiditySensorImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
             case BLINDS:
             case WINDOW_COVERING:
-                return new HomekitWindowCoveringImpl(taggedItem, itemRegistry, updater);
+                return new HomekitWindowCoveringImpl(taggedItem, itemRegistry, itemChannelLinkRegistry, updater);
         }
 
         throw new Exception("Unknown homekit type: " + taggedItem.getDeviceType());

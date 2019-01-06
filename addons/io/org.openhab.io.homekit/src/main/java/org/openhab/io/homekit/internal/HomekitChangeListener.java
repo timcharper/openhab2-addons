@@ -13,6 +13,7 @@ import java.util.Collection;
 import org.eclipse.smarthome.core.items.Item;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.items.ItemRegistryChangeListener;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.accessories.HomekitAccessoryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public class HomekitChangeListener implements ItemRegistryChangeListener {
     private Logger logger = LoggerFactory.getLogger(HomekitChangeListener.class);
     private final HomekitAccessoryRegistry accessoryRegistry = new HomekitAccessoryRegistry();
     private HomekitSettings settings;
+    private ItemChannelLinkRegistry itemChannelLinkRegistry;
 
     @Override
     public synchronized void added(Item item) {
@@ -75,8 +77,19 @@ public class HomekitChangeListener implements ItemRegistryChangeListener {
 
     public synchronized void setItemRegistry(ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
-        itemRegistry.addRegistryChangeListener(this);
-        itemRegistry.getAll().forEach(item -> added(item));
+        initWhenReady();
+    }
+
+    public synchronized void setItemChannelLinkRegistry(ItemChannelLinkRegistry itemChannelLinkRegistry) {
+        this.itemChannelLinkRegistry = itemChannelLinkRegistry;
+        initWhenReady();
+    }
+
+    private synchronized void initWhenReady() {
+        if ((this.itemChannelLinkRegistry != null) && (this.itemRegistry != null)) {
+            itemRegistry.addRegistryChangeListener(this);
+            itemRegistry.getAll().forEach(item -> added(item));
+        }
     }
 
     public void setUpdater(HomekitAccessoryUpdater updater) {
@@ -96,8 +109,8 @@ public class HomekitChangeListener implements ItemRegistryChangeListener {
     private void createRootDevice(HomekitTaggedItem taggedItem) {
         try {
             logger.debug("Adding homekit device {}", taggedItem.getItem().getName());
-            accessoryRegistry
-                    .addRootDevice(HomekitAccessoryFactory.create(taggedItem, itemRegistry, updater, settings));
+            accessoryRegistry.addRootDevice(HomekitAccessoryFactory.create(taggedItem, itemRegistry,
+                    itemChannelLinkRegistry, updater, settings));
             logger.debug("Added homekit device {}", taggedItem.getItem().getName());
         } catch (Exception e) {
             logger.error("Could not add device: {}", e.getMessage(), e);

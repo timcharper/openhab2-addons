@@ -19,6 +19,7 @@ import org.eclipse.smarthome.core.library.items.NumberItem;
 import org.eclipse.smarthome.core.library.items.StringItem;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.StringType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitSettings;
@@ -54,8 +55,9 @@ class HomekitThermostatImpl extends AbstractTemperatureHomekitAccessoryImpl<Grou
     private Logger logger = LoggerFactory.getLogger(HomekitThermostatImpl.class);
 
     public HomekitThermostatImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater, HomekitSettings settings) {
-        super(taggedItem, itemRegistry, updater, settings, GroupItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater,
+            HomekitSettings settings) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, settings, GroupItem.class);
         this.groupName = taggedItem.getItem().getName();
         this.settings = settings;
     }
@@ -95,6 +97,9 @@ class HomekitThermostatImpl extends AbstractTemperatureHomekitAccessoryImpl<Grou
 
     @Override
     public CompletableFuture<ThermostatMode> getCurrentMode() {
+        if (!isOnline(heatingCoolingModeItemName)) {
+            return CompletableFuture.completedFuture(null);
+        }
         Item item = getItemRegistry().get(heatingCoolingModeItemName);
         State state = item.getState();
         ThermostatMode mode;
@@ -122,8 +127,11 @@ class HomekitThermostatImpl extends AbstractTemperatureHomekitAccessoryImpl<Grou
 
     @Override
     public CompletableFuture<Double> getCurrentTemperature() {
+        if (!isOnline(currentTemperatureItemName)) {
+            return CompletableFuture.completedFuture(null);
+        }
         Item item = getItemRegistry().get(currentTemperatureItemName);
-        DecimalType state = (DecimalType) item.getStateAs(DecimalType.class);
+        DecimalType state = item.getStateAs(DecimalType.class);
         if (state == null) {
             return CompletableFuture.completedFuture(null);
         }
@@ -137,16 +145,15 @@ class HomekitThermostatImpl extends AbstractTemperatureHomekitAccessoryImpl<Grou
 
     @Override
     public CompletableFuture<Double> getTargetTemperature() {
-        if (targetTemperatureItemName != null) {
-            Item item = getItemRegistry().get(targetTemperatureItemName);
-            DecimalType state = (DecimalType) item.getStateAs(DecimalType.class);
-            if (state == null) {
-                return CompletableFuture.completedFuture(null);
-            }
-            return CompletableFuture.completedFuture(convertToCelsius(state.doubleValue()));
-        } else {
+        if ((targetTemperatureItemName == null) || !isOnline(targetTemperatureItemName)) {
             return CompletableFuture.completedFuture(null);
         }
+        Item item = getItemRegistry().get(targetTemperatureItemName);
+        DecimalType state = item.getStateAs(DecimalType.class);
+        if (state == null) {
+            return CompletableFuture.completedFuture(null);
+        }
+        return CompletableFuture.completedFuture(convertToCelsius(state.doubleValue()));
     }
 
     @Override

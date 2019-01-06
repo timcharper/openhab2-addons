@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.NumberItem;
 import org.eclipse.smarthome.core.library.types.DecimalType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -26,13 +27,16 @@ import com.beowulfe.hap.accessories.HumiditySensor;
 public class HomekitHumiditySensorImpl extends AbstractHomekitAccessoryImpl<NumberItem> implements HumiditySensor {
 
     public HomekitHumiditySensorImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, NumberItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, NumberItem.class);
     }
 
     @Override
     public CompletableFuture<Double> getCurrentRelativeHumidity() {
-        DecimalType state = (DecimalType) getItem().getStateAs(DecimalType.class);
+        if (!isOnline()) {
+            return CompletableFuture.completedFuture(null);
+        }
+        DecimalType state = getItem().getStateAs(DecimalType.class);
         if (state == null) {
             return CompletableFuture.completedFuture(null);
         }

@@ -14,6 +14,7 @@ import org.eclipse.smarthome.core.items.GenericItem;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.SwitchItem;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -26,17 +27,21 @@ import com.beowulfe.hap.accessories.properties.ValveType;
  * @author Tim Harper - Initial implementation
  */
 public class HomekitValveImpl extends AbstractHomekitAccessoryImpl<SwitchItem> implements Valve {
-    public HomekitValveImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry, HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, SwitchItem.class);
+    public HomekitValveImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, SwitchItem.class);
     }
 
     @Override
     public CompletableFuture<Boolean> getValveActive() {
         OnOffType state = getItem().getStateAs(OnOffType.class);
-        if (state == null) {
+        if (!isOnline()) {
             return CompletableFuture.completedFuture(null);
+        } else if (state == null) {
+            return CompletableFuture.completedFuture(false);
+        } else {
+            return CompletableFuture.completedFuture(state == OnOffType.ON);
         }
-        return CompletableFuture.completedFuture(state == OnOffType.ON);
     }
 
     @Override

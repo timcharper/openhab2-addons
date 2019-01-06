@@ -15,6 +15,7 @@ import org.eclipse.smarthome.core.items.GroupItem;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.SwitchItem;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -26,15 +27,19 @@ import com.beowulfe.hap.accessories.Switch;
  *
  * @author Andy Lintner
  */
-public class HomekitSwitchImpl extends AbstractHomekitAccessoryImpl<SwitchItem>implements Switch {
+public class HomekitSwitchImpl extends AbstractHomekitAccessoryImpl<SwitchItem> implements Switch {
 
-    public HomekitSwitchImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry, HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, SwitchItem.class);
+    public HomekitSwitchImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, SwitchItem.class);
     }
 
     @Override
     public CompletableFuture<Boolean> getSwitchState() {
-        OnOffType state = (OnOffType) getItem().getStateAs(OnOffType.class);
+        if (!isOnline()) {
+            return CompletableFuture.completedFuture(null);
+        }
+        OnOffType state = getItem().getStateAs(OnOffType.class);
         return CompletableFuture.completedFuture(state == OnOffType.ON);
     }
 

@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.RollershutterItem;
 import org.eclipse.smarthome.core.library.types.PercentType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -12,10 +13,12 @@ import com.beowulfe.hap.HomekitCharacteristicChangeCallback;
 import com.beowulfe.hap.accessories.WindowCovering;
 import com.beowulfe.hap.accessories.properties.WindowCoveringPositionState;
 
-public class HomekitWindowCoveringImpl extends AbstractHomekitAccessoryImpl<RollershutterItem> implements WindowCovering {
+public class HomekitWindowCoveringImpl extends AbstractHomekitAccessoryImpl<RollershutterItem>
+        implements WindowCovering {
 
-    public HomekitWindowCoveringImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry, HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, RollershutterItem.class);
+    public HomekitWindowCoveringImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, RollershutterItem.class);
     }
 
     @Override

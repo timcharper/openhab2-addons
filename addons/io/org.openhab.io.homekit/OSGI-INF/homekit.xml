@@ -13,6 +13,7 @@
 	<implementation class="org.openhab.io.homekit.internal.HomekitImpl"/>
 	<reference bind="setStorageService" cardinality="1..1" interface="org.eclipse.smarthome.core.storage.StorageService" policy="static" name="StorageService"/>
 	<reference bind="setItemRegistry" cardinality="1..1" interface="org.eclipse.smarthome.core.items.ItemRegistry" name="ItemRegistry" policy="static"/>
+	<reference bind="setItemChannelLinkRegistry" cardinality="1..1" interface="org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry" name="ItemChannelLinkRegistry" policy="static"/>
 	<service>
 		<provide interface="org.openhab.io.homekit.Homekit" />
 	</service>

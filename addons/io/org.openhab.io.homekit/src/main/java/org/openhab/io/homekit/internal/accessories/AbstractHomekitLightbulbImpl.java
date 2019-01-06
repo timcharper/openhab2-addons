@@ -15,6 +15,7 @@ import org.eclipse.smarthome.core.items.GroupItem;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.SwitchItem;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -30,14 +31,19 @@ abstract class AbstractHomekitLightbulbImpl<T extends SwitchItem> extends Abstra
         implements Lightbulb {
 
     public AbstractHomekitLightbulbImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater, Class<T> expectedItemClass) {
-        super(taggedItem, itemRegistry, updater, expectedItemClass);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater,
+            Class<T> expectedItemClass) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, expectedItemClass);
     }
 
     @Override
     public CompletableFuture<Boolean> getLightbulbPowerState() {
-        OnOffType state = (OnOffType) getItem().getStateAs(OnOffType.class);
-        return CompletableFuture.completedFuture(state == OnOffType.ON);
+        if (!isOnline()) {
+            return CompletableFuture.completedFuture(null);
+        } else {
+            OnOffType state = getItem().getStateAs(OnOffType.class);
+            return CompletableFuture.completedFuture(state == OnOffType.ON);
+        }
     }
 
     @Override

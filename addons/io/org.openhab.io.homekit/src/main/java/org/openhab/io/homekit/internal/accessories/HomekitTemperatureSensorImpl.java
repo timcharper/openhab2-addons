@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.NumberItem;
 import org.eclipse.smarthome.core.library.types.DecimalType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitSettings;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
@@ -29,13 +30,17 @@ class HomekitTemperatureSensorImpl extends AbstractTemperatureHomekitAccessoryIm
         implements TemperatureSensor {
 
     public HomekitTemperatureSensorImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater, HomekitSettings settings) {
-        super(taggedItem, itemRegistry, updater, settings, NumberItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater,
+            HomekitSettings settings) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, settings, NumberItem.class);
     }
 
     @Override
     public CompletableFuture<Double> getCurrentTemperature() {
-        DecimalType state = (DecimalType) getItem().getStateAs(DecimalType.class);
+        if (!isOnline()) {
+            return CompletableFuture.completedFuture(null);
+        }
+        DecimalType state = getItem().getStateAs(DecimalType.class);
         if (state == null) {
             return CompletableFuture.completedFuture(null);
         }

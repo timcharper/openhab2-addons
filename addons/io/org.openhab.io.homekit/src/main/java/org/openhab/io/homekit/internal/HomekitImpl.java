@@ -14,6 +14,7 @@ import java.security.InvalidAlgorithmParameterException;
 
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.storage.StorageService;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.Homekit;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
@@ -45,6 +46,10 @@ public class HomekitImpl implements Homekit {
         changeListener.setItemRegistry(itemRegistry);
     }
 
+    public void setItemChannelLinkRegistry(ItemChannelLinkRegistry itemChannelLinkRegistry) {
+        changeListener.setItemChannelLinkRegistry(itemChannelLinkRegistry);
+    }
+
     protected synchronized void activate(ComponentContext componentContext) {
         modified(componentContext);
     }
@@ -70,7 +75,7 @@ public class HomekitImpl implements Homekit {
             bridge.stop();
             bridge = null;
         }
-        if (homekit != null){
+        if (homekit != null) {
             homekit.stop();
             homekit = null;
         }

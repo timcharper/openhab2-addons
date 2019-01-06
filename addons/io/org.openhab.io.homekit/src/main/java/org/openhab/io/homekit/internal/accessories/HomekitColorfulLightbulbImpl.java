@@ -15,6 +15,7 @@ import org.eclipse.smarthome.core.library.items.ColorItem;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.HSBType;
 import org.eclipse.smarthome.core.library.types.PercentType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
@@ -32,8 +33,8 @@ class HomekitColorfulLightbulbImpl extends AbstractHomekitLightbulbImpl<ColorIte
         implements ColorfulLightbulb, DimmableLightbulb {
 
     public HomekitColorfulLightbulbImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, ColorItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, ColorItem.class);
     }
 
     @Override

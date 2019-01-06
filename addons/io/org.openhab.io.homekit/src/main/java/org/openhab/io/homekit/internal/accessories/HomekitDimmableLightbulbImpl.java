@@ -15,6 +15,7 @@ import org.eclipse.smarthome.core.items.GroupItem;
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.DimmerItem;
 import org.eclipse.smarthome.core.library.types.PercentType;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.eclipse.smarthome.core.types.State;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
@@ -27,15 +28,19 @@ import com.beowulfe.hap.accessories.DimmableLightbulb;
  *
  * @author Andy Lintner
  */
-class HomekitDimmableLightbulbImpl extends AbstractHomekitLightbulbImpl<DimmerItem>implements DimmableLightbulb {
+class HomekitDimmableLightbulbImpl extends AbstractHomekitLightbulbImpl<DimmerItem> implements DimmableLightbulb {
 
     public HomekitDimmableLightbulbImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, DimmerItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, DimmerItem.class);
     }
 
     @Override
     public CompletableFuture<Integer> getBrightness() {
+        if (!isOnline()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
         State state = getItem().getStateAs(PercentType.class);
         if (state instanceof PercentType) {
             PercentType brightness = (PercentType) state;

@@ -10,6 +10,7 @@ package org.openhab.io.homekit.internal.accessories;
 
 import org.eclipse.smarthome.core.items.ItemRegistry;
 import org.eclipse.smarthome.core.library.items.SwitchItem;
+import org.eclipse.smarthome.core.thing.link.ItemChannelLinkRegistry;
 import org.openhab.io.homekit.internal.HomekitAccessoryUpdater;
 import org.openhab.io.homekit.internal.HomekitTaggedItem;
 
@@ -21,8 +22,8 @@ import org.openhab.io.homekit.internal.HomekitTaggedItem;
 class HomekitLightbulbImpl extends AbstractHomekitLightbulbImpl<SwitchItem> {
 
     public HomekitLightbulbImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
-            HomekitAccessoryUpdater updater) {
-        super(taggedItem, itemRegistry, updater, SwitchItem.class);
+            ItemChannelLinkRegistry itemChannelLinkRegistry, HomekitAccessoryUpdater updater) {
+        super(taggedItem, itemRegistry, itemChannelLinkRegistry, updater, SwitchItem.class);
     }
 
 }
