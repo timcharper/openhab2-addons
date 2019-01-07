@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author Andy Lintner
  */
-public enum HomekitDeviceType {
+public enum HomekitAccessoryType {
 
     DIMMABLE_LIGHTBULB("DimmableLighting"),
     HUMIDITY_SENSOR("CurrentHumidity"),
@@ -33,21 +33,25 @@ public enum HomekitDeviceType {
     @Deprecated()
     BLINDS("Blinds");
 
-    private static final Map<String, HomekitDeviceType> tagMap = new HashMap<>();
+    private static final Map<String, HomekitAccessoryType> tagMap = new HashMap<>();
 
     static {
-        for (HomekitDeviceType type : HomekitDeviceType.values()) {
+        for (HomekitAccessoryType type : HomekitAccessoryType.values()) {
             tagMap.put(type.tag, type);
         }
     }
 
     private final String tag;
 
-    private HomekitDeviceType(String tag) {
+    private HomekitAccessoryType(String tag) {
         this.tag = tag;
     }
 
-    public static HomekitDeviceType valueOfTag(String tag) {
+    public String getTag() {
+        return tag;
+    }
+
+    public static HomekitAccessoryType valueOfTag(String tag) {
         return tagMap.get(tag);
     }
 }
