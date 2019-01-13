@@ -138,7 +138,7 @@ public class GeoThunkHandler extends BaseThingHandler {
     }
 
     @Override
-    public void initialize() {
+    public synchronized void initialize() {
         // logger.debug("Start initializing!");
         GeoThunkConfiguration config = getConfigAs(GeoThunkConfiguration.class);
         logger.debug("config url = {}", config.url);
@@ -159,7 +159,7 @@ public class GeoThunkHandler extends BaseThingHandler {
     }
 
     @Override
-    public void dispose() {
+    public synchronized void dispose() {
         logger.debug("Disposing of GeoThunk thing, stopping handler");
         refreshJob = refreshJob.flatMap(j -> {
             j.cancel(true);
@@ -170,7 +170,7 @@ public class GeoThunkHandler extends BaseThingHandler {
     /**
      * Start the job refreshing the Air Quality data
      */
-    private void startAutomaticRefresh(String url, int delaySeconds) {
+    private synchronized void startAutomaticRefresh(String url, int delaySeconds) {
         if (!refreshJob.filter(j -> !j.isCancelled()).isPresent()) {
             Runnable runnable = () -> {
                 try {
