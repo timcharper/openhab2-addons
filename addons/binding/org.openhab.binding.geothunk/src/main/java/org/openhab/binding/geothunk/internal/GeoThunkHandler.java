@@ -57,6 +57,7 @@ import com.google.gson.JsonSyntaxException;
 @NonNullByDefault
 public class GeoThunkHandler extends BaseThingHandler {
 
+    private static final int HTTP_TIMEOUT_MS = 5000;
     private static final int DEFAULT_REFRESH_PERIOD_SECONDS = 600; // 10 minutes
     private final Logger logger = LoggerFactory.getLogger(GeoThunkHandler.class);
 
@@ -184,7 +185,7 @@ public class GeoThunkHandler extends BaseThingHandler {
                             updateChannel(channel.getUID().getId(), response);
                         }
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     logger.error("Exception occurred during execution: {}", e.getMessage(), e);
                 }
             };
@@ -219,6 +220,9 @@ public class GeoThunkHandler extends BaseThingHandler {
             // Run the HTTP request and get the JSON response from aqicn.org
             URL url = new URL(urlStr);
             URLConnection connection = url.openConnection();
+            // Set timeouts to prevent the poller from getting stuck
+            connection.setConnectTimeout(HTTP_TIMEOUT_MS);
+            connection.setReadTimeout(HTTP_TIMEOUT_MS);
 
             try {
                 String response = IOUtils.toString(connection.getInputStream());
