@@ -65,6 +65,7 @@ public class HomekitAccessoryUpdater {
             return;
         }
         subscriptionsByName.computeIfPresent(new ItemKey(item, key), (k, v) -> {
+            logger.debug("Removing existing subscription for {} / {}", item, key);
             item.removeStateChangeListener(v);
             return null;
         });
