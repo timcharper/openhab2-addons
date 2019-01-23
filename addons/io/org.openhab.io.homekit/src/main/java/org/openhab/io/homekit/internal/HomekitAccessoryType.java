@@ -28,7 +28,9 @@ public enum HomekitAccessoryType {
     COLORFUL_LIGHTBULB("ColorfulLighting"),
     VALVE("Valve"),
     LEAK_SENSOR("LeakSensor"),
-    MOTION_SENSOR("MotionSensor");
+    MOTION_SENSOR("MotionSensor"),
+    OCCUPANCY_SENSOR("OccupancySensor"),
+    CONTACT_SENSOR("ContactSensor");
 
     private static final Map<String, HomekitAccessoryType> tagMap = new HashMap<>();
 
