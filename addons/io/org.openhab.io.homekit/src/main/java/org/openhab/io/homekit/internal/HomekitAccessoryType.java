@@ -30,7 +30,10 @@ public enum HomekitAccessoryType {
     LEAK_SENSOR("LeakSensor"),
     MOTION_SENSOR("MotionSensor"),
     OCCUPANCY_SENSOR("OccupancySensor"),
-    CONTACT_SENSOR("ContactSensor");
+    CONTACT_SENSOR("ContactSensor"),
+    WINDOW_COVERING("WindowCovering"),
+    @Deprecated()
+    BLINDS("Blinds");
 
     private static final Map<String, HomekitAccessoryType> tagMap = new HashMap<>();
 
