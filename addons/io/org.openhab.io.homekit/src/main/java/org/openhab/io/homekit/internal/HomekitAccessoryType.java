@@ -34,6 +34,7 @@ public enum HomekitAccessoryType {
     WINDOW_COVERING("WindowCovering"),
     SMOKE_SENSOR("SmokeSensor"),
     CARBON_MONOXIDE_SENSOR("CarbonMonoxideSensor"),
+    DIMMABLE_FAN("DimmableFan"),
     @Deprecated()
     BLINDS("Blinds");
 

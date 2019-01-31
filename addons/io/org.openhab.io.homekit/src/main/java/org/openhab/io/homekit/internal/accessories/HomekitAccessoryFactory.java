@@ -123,7 +123,11 @@ public class HomekitAccessoryFactory {
 
                 return new HomekitSmokeSensorImpl(carbonMonoxideSensorAccessory, itemRegistry, updater,
                         BatteryStatus.getFromCharacteristics(characteristicItems));
+            case DIMMABLE_FAN:
+                HomekitTaggedItem fanAccessory = getPrimaryAccessory(taggedItem, HomekitAccessoryType.DIMMABLE_FAN,
+                        itemRegistry).orElseThrow(() -> new Exception("Fan accessory group should have a fan in it"));
 
+                return new HomekitFanImpl(fanAccessory, itemRegistry, updater);
         }
 
         throw new Exception("Unknown homekit type: " + taggedItem.getAccessoryType());
