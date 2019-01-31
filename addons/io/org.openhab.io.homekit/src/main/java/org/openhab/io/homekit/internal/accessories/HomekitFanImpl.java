@@ -28,7 +28,7 @@ import com.beowulfe.hap.accessories.properties.RotationDirection;
 /**
  * Implements DimmableLightBulb using an Item that provides a On/Off and Percent state.
  *
- * @author Cody Cutrer
+ * @author Cody Cutrer - Initial contribution
  */
 class HomekitFanImpl extends AbstractHomekitAccessoryImpl<GenericItem> implements Fan {
 

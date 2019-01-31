@@ -25,9 +25,9 @@ import com.beowulfe.hap.accessories.DimmableLightbulb;
 /**
  * Implements DimmableLightBulb using an Item that provides a On/Off and Percent state.
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
-class HomekitDimmableLightbulbImpl extends AbstractHomekitLightbulbImpl<DimmerItem>implements DimmableLightbulb {
+class HomekitDimmableLightbulbImpl extends AbstractHomekitLightbulbImpl<DimmerItem> implements DimmableLightbulb {
 
     public HomekitDimmableLightbulbImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry,
             HomekitAccessoryUpdater updater) {

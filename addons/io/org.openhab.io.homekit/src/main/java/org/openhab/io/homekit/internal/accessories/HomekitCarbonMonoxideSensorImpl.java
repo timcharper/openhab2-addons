@@ -26,7 +26,7 @@ import com.beowulfe.hap.accessories.properties.CarbonMonoxideDetectedState;
 
 /**
  *
- * @author Cody Cutrer - Initial implementation
+ * @author Cody Cutrer - Initial contribution
  */
 public class HomekitCarbonMonoxideSensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements CarbonMonoxideSensor, BatteryStatusAccessory {

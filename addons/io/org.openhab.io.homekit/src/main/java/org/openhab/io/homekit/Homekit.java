@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * HomeKit integration API
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public interface Homekit {
 

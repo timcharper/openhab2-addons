@@ -21,7 +21,7 @@ import com.beowulfe.hap.accessories.HumiditySensor;
 
 /**
  *
- * @author Andy Lintner - Initial implementation
+ * @author Andy Lintner - Initial contribution
  */
 public class HomekitHumiditySensorImpl extends AbstractHomekitAccessoryImpl<NumberItem> implements HumiditySensor {
 

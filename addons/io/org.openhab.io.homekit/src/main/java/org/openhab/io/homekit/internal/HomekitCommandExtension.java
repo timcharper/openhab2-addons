@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Console commands for interacting with the HomeKit integration
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public class HomekitCommandExtension extends AbstractConsoleCommandExtension {
 

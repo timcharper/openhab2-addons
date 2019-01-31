@@ -24,7 +24,7 @@ import com.beowulfe.hap.accessories.MotionSensor;
 
 /**
  *
- * @author Tim Harper - Initial implementation
+ * @author Tim Harper - Initial contribution
  */
 public class HomekitMotionSensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements MotionSensor, BatteryStatusAccessory {

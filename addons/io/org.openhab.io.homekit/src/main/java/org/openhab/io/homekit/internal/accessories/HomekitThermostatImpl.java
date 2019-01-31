@@ -44,7 +44,7 @@ import com.beowulfe.hap.accessories.thermostat.BasicThermostat;
  * <li>Heating/Cooling Mode: String type (see HomekitSettings.thermostat*Mode)</li>
  * </ul>
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 class HomekitThermostatImpl extends AbstractTemperatureHomekitAccessoryImpl<GroupItem> implements BasicThermostat {
 

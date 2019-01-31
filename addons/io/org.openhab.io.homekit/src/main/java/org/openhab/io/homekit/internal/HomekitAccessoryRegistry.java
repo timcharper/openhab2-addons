@@ -24,7 +24,7 @@ import com.beowulfe.hap.HomekitRoot;
  * Stores the created HomekitAccessories. GroupedAccessories are also held here
  * in a pre-created pending state until all required characteristics are found.
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 class HomekitAccessoryRegistry {
 

@@ -26,7 +26,7 @@ import com.beowulfe.hap.HomekitCharacteristicChangeCallback;
  * Homekit library takes care of insuring only a single subscription exists for
  * each accessory.
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public class HomekitAccessoryUpdater {
 

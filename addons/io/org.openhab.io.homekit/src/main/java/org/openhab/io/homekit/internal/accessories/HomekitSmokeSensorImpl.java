@@ -26,7 +26,7 @@ import com.beowulfe.hap.accessories.properties.SmokeDetectedState;
 
 /**
  *
- * @author Cody Cutrer - Initial implementation
+ * @author Cody Cutrer - Initial contribution
  */
 public class HomekitSmokeSensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements SmokeSensor, BatteryStatusAccessory {

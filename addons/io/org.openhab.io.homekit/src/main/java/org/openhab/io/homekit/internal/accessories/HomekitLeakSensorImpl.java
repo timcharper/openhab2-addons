@@ -25,7 +25,7 @@ import com.beowulfe.hap.accessories.LeakSensor;
 
 /**
  *
- * @author Tim Harper - Initial implementation
+ * @author Tim Harper - Initial contribution
  */
 public class HomekitLeakSensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements LeakSensor, BatteryStatusAccessory {

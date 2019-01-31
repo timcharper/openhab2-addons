@@ -3,6 +3,7 @@ Automatic-Module-Name: org.openhab.io.homekit
 Bundle-ClassPath: 
  .,
  lib/hap-1.1.5-SNAPSHOT.jar,
+ lib/hap-1.1.5-SNAPSHOT-sources.jar,
  lib/com.nimbusds.srp6a-1.5.2.jar,
  lib/io.netty.netty-all-4.0.32.Final.jar,
  lib/javax.json.javax.json-api-1.0.jar,

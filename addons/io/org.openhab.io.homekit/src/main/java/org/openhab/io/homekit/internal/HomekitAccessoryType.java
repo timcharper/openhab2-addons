@@ -15,7 +15,7 @@ import java.util.Map;
  * Enum of the possible device types. The defined tag string can be used
  * as a tag on an item to enable it for Homekit.
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public enum HomekitAccessoryType {
 

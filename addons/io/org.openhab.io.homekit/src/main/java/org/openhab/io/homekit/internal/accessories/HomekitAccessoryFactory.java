@@ -30,7 +30,7 @@ import com.google.common.collect.ImmutableMap;
 /**
  * Creates a HomekitAccessory for a given HomekitTaggedItem.
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public class HomekitAccessoryFactory {
     static Logger logger = LoggerFactory.getLogger(HomekitTaggedItem.class);

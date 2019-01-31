@@ -25,7 +25,7 @@ import com.beowulfe.hap.HomekitServer;
 /**
  * Provides access to openHAB items via the Homekit API
  *
- * @author Andy Lintner
+ * @author Andy Lintner - Initial contribution
  */
 public class HomekitImpl implements Homekit {
 
@@ -70,7 +70,7 @@ public class HomekitImpl implements Homekit {
             bridge.stop();
             bridge = null;
         }
-        if (homekit != null){
+        if (homekit != null) {
             homekit.stop();
             homekit = null;
         }

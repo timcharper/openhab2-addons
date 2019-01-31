@@ -24,7 +24,7 @@ import com.beowulfe.hap.accessories.OccupancySensor;
 
 /**
  *
- * @author Tim Harper - Initial implementation
+ * @author Tim Harper - Initial contribution
  */
 public class HomekitOccupancySensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements OccupancySensor, BatteryStatusAccessory {

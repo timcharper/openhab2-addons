@@ -25,7 +25,7 @@ import com.beowulfe.hap.accessories.properties.ContactState;
 
 /**
  *
- * @author Tim Harper - Initial implementation
+ * @author Tim Harper - Initial contribution
  */
 public class HomekitContactSensorImpl extends AbstractHomekitAccessoryImpl<GenericItem>
         implements ContactSensor, BatteryStatusAccessory {

@@ -23,7 +23,7 @@ import com.beowulfe.hap.accessories.properties.ValveType;
 
 /**
  *
- * @author Tim Harper - Initial implementation
+ * @author Tim Harper - Initial contribution
  */
 public class HomekitValveImpl extends AbstractHomekitAccessoryImpl<SwitchItem> implements Valve {
     public HomekitValveImpl(HomekitTaggedItem taggedItem, ItemRegistry itemRegistry, HomekitAccessoryUpdater updater) {

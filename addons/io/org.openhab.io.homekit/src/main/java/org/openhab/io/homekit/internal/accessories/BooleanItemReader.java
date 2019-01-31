@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) 2010-2018 by the respective copyright holders.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.io.homekit.internal.accessories;
 
 import org.eclipse.smarthome.core.items.Item;
@@ -12,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Wraps either a SwitchItem or a ContactItem, interpretting the open / closed states accordingly.
  *
- * @author Tim Harper
+ * @author Tim Harper - Initial contribution
  *
  */
 public class BooleanItemReader {
@@ -24,8 +32,8 @@ public class BooleanItemReader {
 
     /**
      *
-     * @param item                The item to read
-     * @param trueOnOffValue      If OnOffType, then consider true if this value
+     * @param item The item to read
+     * @param trueOnOffValue If OnOffType, then consider true if this value
      * @param trueOpenClosedValue if OpenClosedType, then consider true if this value
      */
     BooleanItemReader(Item item, OnOffType trueOnOffValue, OpenClosedType trueOpenClosedValue) {
