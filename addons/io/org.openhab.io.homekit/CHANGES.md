@@ -1,5 +1,55 @@
 # Changes
 
+## 2.4.0-homekit-5
+
+### Breaking changes
+
+The following config options have been renamed:
+
+* `org.openhab.homekit:thermostatCoolMode` to `org.openhab.homekit:thermostatTargetModeCool`
+* `org.openhab.homekit:thermostatHeatMode` to `org.openhab.homekit:thermostatTargetModeHeat`
+* `org.openhab.homekit:thermostatAutoMode` to `org.openhab.homekit:thermostatTargetModeAuto`
+* `org.openhab.homekit:thermostatOffMode` to `org.openhab.homekit:thermostatTargetModeOff`
+
+Further, the following required config options have been specified:
+
+* `org.openhab.homekit:thermostatCurrenModeCooling`
+* `org.openhab.homekit:thermostatCurrenModeHeating`
+* `org.openhab.homekit:thermostatCurrenModeOff`
+
+
+You will need to update your homekit configuration accordingly, either by editing your homekit config file, or by editing the configuration for the IO service using the paper UI.
+
+### Thermostat fixes
+
+Previously, the mapping of target and current thermostat mode was broken. It is considered illegal to return current mode of "AUTO", and resulted in an error. The issue has been fixed in my fork of homekit (see https://github.com/beowulfe/HAP-Java/issues/60)
+
+Support for an item indicating the thermostat current mode has been added.
+
+The homekit plugin configuration screen for paper-ui has been improved, adding groupings for each set of mappings.
+
+The tag `homekit:HeatingCoolingMode` has been changed to `homekit:TargetHeatingCoolingMode`. The old tag is supported still, but you should update your thermostat tagged item, respectively.
+
+## 2.4.0-homekit-4
+
+### Allow motion and leak accessories to be backed by Contact items
+
+Some Z-wave devices configure these things to expose their channels as an OpenClosedType, rather than OnOffType, due to the fact that Contact items are read-only. In this release, we allow these boolean-like status accessories to be backed by either a Switch or a Contact item.
+
+For Motion sensors, Open is considered "motion detected" (think "window open" as the actionable event). Similarly, leaks are reported if the backing Item is Open.
+
+### Debounce the refreshing of Homekit items
+
+The plugin now waits for items to be stable for a full second before creating, removing, and deleting the associated homekit accessories. This greatly reduces the chaos, overhead, and misleading log messages when adding, removing, or changing multiple items at a time.
+
+### Contact and Occupancy Sensors support
+
+Support is added for contact and occupancy sensors.
+
+### WindowCovering is brought back
+
+I have fixed the issue with WindowCovering in my upstream fork of HAP-Java. WindowCovering now functions properly and has been re-enabled.
+
 ## 2.4.0-homekit-3
 
 ### Removed WindowCovering
